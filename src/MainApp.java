@@ -8,7 +8,7 @@ public class MainApp extends JFrame {
 
     public MainApp() {
         setTitle("Booking System");
-        setSize(800, 600);
+        setSize(1024, 768);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         cardLayout = new CardLayout();
