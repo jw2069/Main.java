@@ -15,7 +15,7 @@ public class BrowseServicesUI extends JFrame {
 
         // Main panel
         JPanel panel = new JPanel();
-        panel.setLayout(new GridLayout(7, 2, 10, 10));
+        panel.setLayout(new GridLayout(6, 2, 10, 10));
 
         // Components
         JLabel vehicleLabel = new JLabel("Vehicle Type:");
@@ -29,9 +29,6 @@ public class BrowseServicesUI extends JFrame {
         JLabel distanceLabel = new JLabel("Distance to Airport (km):");
         JTextField distanceField = new JTextField();
 
-        JLabel dayLabel = new JLabel("Day of Week:");
-        String[] days = {"Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"};
-        JComboBox<String> dayBox = new JComboBox<>(days);
 
         JLabel timeLabel = new JLabel("Time of Day:");
         String[] times = {"Morning", "Afternoon", "Evening", "Night"};
@@ -50,8 +47,6 @@ public class BrowseServicesUI extends JFrame {
         panel.add(distanceLabel);
         panel.add(distanceField);
 
-        panel.add(dayLabel);
-        panel.add(dayBox);
 
         panel.add(timeLabel);
         panel.add(timeBox);
@@ -67,10 +62,9 @@ public class BrowseServicesUI extends JFrame {
                 double distance = Double.parseDouble(distanceField.getText());
                 String vehicle = (String) vehicleBox.getSelectedItem();
                 String luggage = (String) luggageBox.getSelectedItem();
-                String day = (String) dayBox.getSelectedItem();
                 String time = (String) timeBox.getSelectedItem();
 
-                double cost = calculateCost(vehicle, luggage, distance, day, time);
+                double cost = calculateCost(vehicle, luggage, distance, time);
                 resultLabel.setText("Estimated Cost: £" + String.format("%.2f", cost));
 
             } catch (Exception ex) {
@@ -81,31 +75,9 @@ public class BrowseServicesUI extends JFrame {
         setVisible(true);
     }
 
-    // Example formula (you can change this)
-    private double calculateCost(String vehicle, String luggage, double distance, String day, String time) {
-        double base = 5.0;
-        double perKm = 1.2 * distance;
-
-        double vehicleMultiplier = switch (vehicle) {
-            case "Executive" -> 1.5;
-            case "Minivan" -> 1.3;
-            default -> 1.0;
-        };
-
-        double luggageFee = switch (luggage) {
-            case "1 bag" -> 2;
-            case "2 bags" -> 4;
-            case "3+ bags" -> 6;
-            default -> 0;
-        };
-
-        double timeMultiplier = switch (time) {
-            case "Night" -> 1.4;
-            case "Evening" -> 1.2;
-            default -> 1.0;
-        };
-
-        return (base + perKm + luggageFee) * vehicleMultiplier * timeMultiplier;
+    // Wrapper method for UI
+    double calculateCost(String vehicle, String luggage, double distance, String time) {
+        return TariffCalculator.calculateCost(vehicle, luggage, distance, time);
     }
 
     // Main method to run the UI
