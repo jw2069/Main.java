@@ -1,7 +1,7 @@
 import javax.swing.*;
 import java.awt.*;
 
-//Adam
+//Adam Mounir
 public class BookingConfirmationPanel extends JPanel {
 
     private MainApp mainApp;
